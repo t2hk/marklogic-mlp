@@ -23,8 +23,6 @@ let $hidden_activation := "relu"
 let $input-variable := cntk:input-variable(cntk:shape(( 1, $input-dims)), "float")
 let $train-data :=
   for $x in xdmp:directory("/iris/train/", "infinity")
-    let $train := fn:concat($x/iris/sepal_length/text(),",", $x/iris/sepal_width/text(), ",", $x/iris/petal_length/text(), ",", $x/iris/petal_width/text())
-    (:return $train:)
     return ($x/iris/sepal_length/text(), $x/iris/sepal_width/text(), $x/iris/petal_length/text(),  $x/iris/petal_width/text())
 
 let $input-value := cntk:batch(cntk:shape((1, $input-dims)), json:to-array($train-data))
@@ -67,8 +65,9 @@ let $loss := cntk:cross-entropy-with-softmax(
 (:予測結果の評価:)     
 let $err := cntk:classification-error($model, $label-variable, 1, cntk:axis(-1))
 
-(:訓練機の構築:)
-let $parameter:=cntk:function-parameters($model)  
+(:訓練器の構築:)
+let $parameter:=cntk:function-parameters($model)
+
 let $learner := 
      cntk:sgd-learner(($parameter), 
      cntk:learning-rate-schedule-from-constant(0.1))
