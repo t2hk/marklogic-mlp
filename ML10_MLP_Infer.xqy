@@ -30,7 +30,7 @@ let $test-labels :=
   for $x in $test-data-docs
     let $_label := $x/iris/species/text()
     let $_one-hot-label := 
-      if ($_label = "setosa") then ("senosa", 1,0,0)
+      if ($_label = "setosa") then ("setosa", 1,0,0)
       else if ($_label = "virginica")  then ("virginica", 0,1,0)
       else if ($_label = "versicolor") then ("versicolor", 0,0,1)
       else ("unknown", 0,0,0)
