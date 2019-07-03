@@ -33,7 +33,6 @@ let $input_value := cntk:batch(cntk:shape((1, $input_dims)), json:to-array($trai
 let $label_variable := cntk:input-variable(cntk:shape(( 1, $num_classes)), "float")
 let $labels :=
 for $x in xdmp:directory("/iris/train/", "infinity")
-  let $data := $x
   let $_label := $x/iris/species/text()
   return if ($_label = "setosa") then (1,0,0)
   else if ($_label = "virginica")  then (0,1,0)
