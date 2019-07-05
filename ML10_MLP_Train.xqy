@@ -53,8 +53,7 @@ let $_model := local:mlp($input_variable, ($num_hidden_layers), $_model_map)
 let $_output_map := map:map()
 let $_ := map:put($_output_map, "activation", $hidden_activation)
 let $_ := map:put($_output_map, "output-shape", cntk:shape((1, $num_classes)))
-let $_model := cntk:dense-layer($_model, $_output_map)
-let $model := cntk:softmax($_model)
+let $model := cntk:dense-layer($_model, $_output_map)
 
 (:予測結果と正解の交差エントロピー誤差を求める:)
 let $loss := cntk:cross-entropy-with-softmax(
